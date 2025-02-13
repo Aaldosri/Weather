@@ -4,26 +4,245 @@ import "./App.css";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import CloudIcon from "@mui/icons-material/Cloud";
+import Button from "@mui/material/Button";
+import { styled } from "@mui/material/styles";
+import { Box } from "@mui/system";
+
+// ICONS
+import DeviceThermostatIcon from "@mui/icons-material/DeviceThermostat";
+import AcUnitIcon from "@mui/icons-material/AcUnit";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
+import { useEffect } from "react";
+
+const MaterialUISwitch = styled(Switch)(({ theme }) => ({
+  width: 62,
+  height: 34,
+  padding: 7,
+  "& .MuiSwitch-switchBase": {
+    margin: 1,
+    padding: 0,
+    transform: "translateX(6px)",
+    "&.Mui-checked": {
+      color: "#fff",
+      transform: "translateX(22px)",
+      "& .MuiSwitch-thumb:before": {
+        backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 20 20"><path fill="${encodeURIComponent(
+          "#fff"
+        )}" d="M4.2 2.5l-.7 1.8-1.8.7 1.8.7.7 1.8.6-1.8L6.7 5l-1.9-.7-.6-1.8zm15 8.3a6.7 6.7 0 11-6.6-6.6 5.8 5.8 0 006.6 6.6z"/></svg>')`,
+      },
+      "& + .MuiSwitch-track": {
+        opacity: 1,
+        backgroundColor: "#aab4be",
+        ...theme.applyStyles("dark", {
+          backgroundColor: "#8796A5",
+        }),
+      },
+    },
+  },
+  "& .MuiSwitch-thumb": {
+    backgroundColor: "#001e3c",
+    width: 32,
+    height: 32,
+    "&::before": {
+      content: "''",
+      position: "absolute",
+      width: "100%",
+      height: "100%",
+      left: 0,
+      top: 0,
+      backgroundRepeat: "no-repeat",
+      backgroundPosition: "center",
+      backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 20 20"><path fill="${encodeURIComponent(
+        "#fff"
+      )}" d="M9.305 1.667V3.75h1.389V1.667h-1.39zm-4.707 1.95l-.982.982L5.09 6.072l.982-.982-1.473-1.473zm10.802 0L13.927 5.09l.982.982 1.473-1.473-.982-.982zM10 5.139a4.872 4.872 0 00-4.862 4.86A4.872 4.872 0 0010 14.862 4.872 4.872 0 0014.86 10 4.872 4.872 0 0010 5.139zm0 1.389A3.462 3.462 0 0113.471 10a3.462 3.462 0 01-3.473 3.472A3.462 3.462 0 016.527 10 3.462 3.462 0 0110 6.528zM1.665 9.305v1.39h2.083v-1.39H1.666zm14.583 0v1.39h2.084v-1.39h-2.084zM5.09 13.928L3.616 15.4l.982.982 1.473-1.473-.982-.982zm9.82 0l-.982.982 1.473 1.473.982-.982-1.473-1.473zM9.305 16.25v2.083h1.389V16.25h-1.39z"/></svg>')`,
+    },
+    ...theme.applyStyles("dark", {
+      backgroundColor: "#003892",
+    }),
+  },
+  "& .MuiSwitch-track": {
+    opacity: 1,
+    backgroundColor: "#aab4be",
+    borderRadius: 20 / 2,
+    ...theme.applyStyles("dark", {
+      backgroundColor: "#8796A5",
+    }),
+  },
+}));
+
+const Star = styled("div")({
+  position: "absolute",
+  width: "4px",
+  height: "4px",
+  backgroundColor: "#fff",
+  borderRadius: "50%",
+  boxShadow: "0 0 5px #fff",
+});
+
+const Sun = styled("div")({
+  position: "absolute",
+  width: "20px",
+  height: "20px",
+  backgroundColor: "#ffeb3b",
+  borderRadius: "50%",
+  boxShadow: "0 0 20px #ffeb3b",
+});
+
+// القمر مع تجويف وآثار
+const Moon = styled("div")({
+  position: "absolute",
+  borderRadius: "50%",
+  boxShadow: `
+    0 0 20px rgba(240, 240, 240, 0.5),
+    inset 5px 5px 15px rgba(255, 255, 255, 0.7),
+    inset -5px -5px 15px rgba(255, 255, 255, 0.2)
+  `,
+  background: `
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.7)),
+    radial-gradient(circle at 60% 60%, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.8))
+  `,
+});
+
+const Planet = styled("div")({
+  position: "absolute",
+  borderRadius: "50%",
+  boxShadow: `
+    0 0 10px rgba(255, 255, 255, 0.5),
+    inset 5px 5px 10px rgba(0, 0, 0, 0.5),
+    inset -5px -5px 10px rgba(255, 255, 255, 0.2)
+  `,
+  background: `
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.7)),
+    radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.8))
+  `,
+});
 
 function App() {
   return (
     <>
-      <div>
-        <header></header>
+      <div className="div-header" dir="rtl">
+        <header className="header">
+          <Typography
+            style={{
+              fontWeight: 600,
+              marginLeft: "20px",
+              color: "white",
+              marginRight: "20px",
+            }}
+            variant="h2"
+          >
+            الطقس
+          </Typography>
+          <FormControlLabel
+            control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
+          />
+          <Star sx={{ top: "20%", left: "20%" }} />
+          <Star sx={{ top: "30%", left: "50%" }} />
+          <Star sx={{ top: "30%", left: "50%" }} />
+          <Star sx={{ top: "60%", left: "30%" }} />
+          <Star sx={{ top: "35%", left: "60%" }} />
+          <Star sx={{ top: "20%", left: "80%" }} />
+          <Star sx={{ top: "80%", left: "10%" }} />
+          <Star sx={{ top: "88%", left: "80%" }} />
+          <Star sx={{ top: "50%", left: "90%" }} />
+          {/* القمر */}
+          <Moon
+            sx={{
+              top: "5%",
+              left: "5%",
+              width: "100px",
+              height: "100px",
+              backgroundColor: "#f0f0f0", // لون القمر
+            }}
+          />
+
+          {/* الكواكب */}
+          <Planet
+            sx={{
+              top: "20%",
+              left: "30%",
+              width: "15px",
+              height: "15px",
+              backgroundColor: "#ff5722",
+            }}
+          />
+          <Planet
+            sx={{
+              top: "40%",
+              left: "70%",
+              width: "30px",
+              height: "30px",
+              backgroundColor: "#4caf50",
+            }}
+          />
+          <Planet
+            sx={{
+              top: "60%",
+              left: "80%",
+              width: "25px",
+              height: "25px",
+              backgroundColor: "#2196f3",
+            }}
+          />
+          <Planet
+            sx={{
+              top: "50%",
+              left: "10%",
+              width: "45px",
+              height: "45px",
+              backgroundColor: "#ff9800",
+            }}
+          />
+          <Planet
+            sx={{
+              top: "80%",
+              left: "20%",
+              width: "60px",
+              height: "60px",
+              backgroundColor: "#ff5722",
+            }}
+          />
+          <Planet
+            sx={{
+              top: "20%",
+              left: "90%",
+              width: "50px",
+              height: "50px",
+              backgroundColor: "#e91e63",
+            }}
+          />
+
+          {/* <Sun sx={{ top: "5%", left: "5%" }} /> */}
+
+          <Button
+            style={{ color: "white", fontSize: "25px", marginLeft: "20px" }}
+            variant="text"
+          >
+            EN
+          </Button>
+        </header>
       </div>
 
       <main className="w-screen">
-        <Container maxWidth="sm" style={{ background: "orange" }}>
+        <Container maxWidth="sm">
           {/* CONTEANT CONTAINER */}
 
-          <div className="h-screen flex justify-center items-center bg-green-500">
+          <div className="div-content">
             {/* CARD */}
-            <div className="bg-[rgba(250,235,215,0.418)] rounded-[10px] p-[10px] shadow-[0px_11px_1px_rgba(0,0,0,0.05)]">
+            <div
+              dir="rtl"
+              className=" rounded-[10px] p-[10px] shadow-[0px_11px_1px_rgba(0,0,0,0.05)]"
+              style={{ width: "100%", background: "#133E87", color: "white" }}
+            >
               {/* CONTENT */}
               <div>
                 {/* CITY & TIME */}
-                <div className="flex items-end justify-start p-3" dir="rtl">
-                  <Typography className="mr-[20px]" variant="h2">
+                <div className="flex items-end justify-start " dir="rtl">
+                  <Typography
+                    style={{ fontWeight: 600, marginLeft: "20px" }}
+                    variant="h2"
+                  >
                     الرياض
                   </Typography>
                   <Typography className="mr-[20px]" variant="h5">
@@ -42,19 +261,33 @@ function App() {
                     {/* TEMP */}
                     <div>
                       <Typography className="mr-[20px]" variant="h1" dir="rtl">
-                        11
+                        33
                       </Typography>
 
                       {/* TODO: TEMP IMAGE */}
                     </div>
                     {/* === TEMP === */}
-                    <Typography className="mr-[20px]" variant="h2" dir="rtl">
+                    <Typography className="mr-[20px]" variant="h4" dir="rtl">
                       سحابة
                     </Typography>
                     {/* MIN & MAX */}
-                    <div>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                      }}
+                    >
                       <Typography className="mr-[20px]" variant="h6" dir="rtl">
                         الصغرى: 25
+                      </Typography>
+                      <Typography
+                        style={{ margin: "0px 5px" }}
+                        className="mr-[20px]"
+                        variant="h6"
+                        dir="rtl"
+                      >
+                        |
                       </Typography>
 
                       <Typography className="mr-[20px]" variant="h6" dir="rtl">
@@ -72,6 +305,17 @@ function App() {
                 {/* === CONTAINER OF DEGREE + CLOUD ICON === */}
               </div>
             </div>
+            {/* === CARD === */}
+
+            {/* TRANSLATION BUTTON */}
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "start",
+              }}
+            ></div>
+            {/* === TRANSLATION BUTTON ===*/}
           </div>
         </Container>
       </main>
