@@ -8,12 +8,15 @@ import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import { Box } from "@mui/system";
 
+// REACT
+import { useEffect, useState } from "react";
+
 // ICONS
 import DeviceThermostatIcon from "@mui/icons-material/DeviceThermostat";
 import AcUnitIcon from "@mui/icons-material/AcUnit";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
-import { useEffect } from "react";
+import axios from "axios";
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -119,6 +122,22 @@ const Planet = styled("div")({
 });
 
 function App() {
+  const [temp, setTemp] = useState(null);
+  useEffect(() => {
+    axios
+      .get(
+        "https://api.openweathermap.org/data/2.5/weather?lat=24.774265&lon=46.738586&appid=5ab7bd94f9fa686ba5fbe1e922bf8212"
+      )
+      .then(function (response) {
+        // handle success
+        const responseTemp = Math.round(response.data.main.temp - 272.15);
+        setTemp(responseTemp);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      });
+  }, []);
   return (
     <>
       <div className="div-header" dir="rtl">
@@ -261,7 +280,7 @@ function App() {
                     {/* TEMP */}
                     <div>
                       <Typography className="mr-[20px]" variant="h1" dir="rtl">
-                        33
+                        {temp}
                       </Typography>
 
                       {/* TODO: TEMP IMAGE */}
