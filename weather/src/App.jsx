@@ -121,22 +121,36 @@ const Planet = styled("div")({
   `,
 });
 
+let cancelAxios = null;
+
 function App() {
+  console.log("rendering the component (mounting) ");
   const [temp, setTemp] = useState(null);
   useEffect(() => {
     axios
       .get(
-        "https://api.openweathermap.org/data/2.5/weather?lat=24.774265&lon=46.738586&appid=5ab7bd94f9fa686ba5fbe1e922bf8212"
+        "https://api.openweathermap.org/data/2.5/weather?lat=24.774265&lon=46.738586&appid=5ab7bd94f9fa686ba5fbe1e922bf8212",
+        {
+          cancelToken: new axios.CancelToken((c) => {
+            cancelAxios = c;
+          }),
+        }
       )
       .then(function (response) {
         // handle success
         const responseTemp = Math.round(response.data.main.temp - 272.15);
+        console.log(responseTemp);
         setTemp(responseTemp);
       })
       .catch(function (error) {
         // handle error
         console.log(error);
       });
+
+    return () => {
+      console.log("Canciling");
+      cancelAxios();
+    };
   }, []);
   return (
     <>
