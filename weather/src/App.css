@@ -4,8 +4,29 @@ body {
   background-color: #001a6e;
   overflow: hidden;
 }
+body.dark-mode {
+  background-color: #001a6e;
+  color: white; /* لون النص في الوضع الداكن */
+  overflow: hidden;
+}
+
+body.light-mode {
+  /* background-color: #679fa6; */
+  background-color: #9ad2d9;
+  color: black; /* لون النص في الوضع الفاتح */
+  overflow: hidden;
+}
 
 /* HEADER */
+
+/* .div-dark {
+  background-color: #001a6e;
+}
+
+.div-light {
+  background-color: #b1c3ff;
+  height: 100%;
+} */
 
 .div-header {
   background-color: #074799;

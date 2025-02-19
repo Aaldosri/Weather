@@ -85,8 +85,8 @@ const Star = styled("div")({
 
 const Sun = styled("div")({
   position: "absolute",
-  width: "20px",
-  height: "20px",
+  width: "50px",
+  height: "50px",
   backgroundColor: "#ffeb3b",
   borderRadius: "50%",
   boxShadow: "0 0 20px #ffeb3b",
@@ -124,6 +124,11 @@ const Planet = styled("div")({
 let cancelAxios = null;
 
 function App() {
+  const [darkMode, setDark] = useState(false);
+
+  function DarkMode() {
+    setDark((prevDark) => !prevDark);
+  }
   console.log("rendering the component (mounting) ");
   const [temp, setTemp] = useState(null);
   useEffect(() => {
@@ -152,206 +157,243 @@ function App() {
       cancelAxios();
     };
   }, []);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add("dark-mode"); // إضافة كلاس للوضع الداكن
+      document.body.classList.remove("light-mode"); // إزالة كلاس الوضع الفاتح
+    } else {
+      document.body.classList.add("light-mode"); // إضافة كلاس للوضع الفاتح
+      document.body.classList.remove("dark-mode"); // إزالة كلاس الوضع الداكن
+    }
+  }, [darkMode]);
   return (
     <>
-      <div className="div-header" dir="rtl">
-        <header className="header">
-          <Typography
-            style={{
-              fontWeight: 600,
-              marginLeft: "20px",
-              color: "white",
-              marginRight: "20px",
-            }}
-            variant="h2"
-          >
-            الطقس
-          </Typography>
-          <FormControlLabel
-            control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
-          />
-          <Star sx={{ top: "20%", left: "20%" }} />
-          <Star sx={{ top: "30%", left: "50%" }} />
-          <Star sx={{ top: "30%", left: "50%" }} />
-          <Star sx={{ top: "60%", left: "30%" }} />
-          <Star sx={{ top: "35%", left: "60%" }} />
-          <Star sx={{ top: "20%", left: "80%" }} />
-          <Star sx={{ top: "80%", left: "10%" }} />
-          <Star sx={{ top: "88%", left: "80%" }} />
-          <Star sx={{ top: "50%", left: "90%" }} />
-          {/* القمر */}
-          <Moon
-            sx={{
-              top: "5%",
-              left: "5%",
-              width: "100px",
-              height: "100px",
-              backgroundColor: "#f0f0f0", // لون القمر
-            }}
-          />
-
-          {/* الكواكب */}
-          <Planet
-            sx={{
-              top: "20%",
-              left: "30%",
-              width: "15px",
-              height: "15px",
-              backgroundColor: "#ff5722",
-            }}
-          />
-          <Planet
-            sx={{
-              top: "40%",
-              left: "70%",
-              width: "30px",
-              height: "30px",
-              backgroundColor: "#4caf50",
-            }}
-          />
-          <Planet
-            sx={{
-              top: "60%",
-              left: "80%",
-              width: "25px",
-              height: "25px",
-              backgroundColor: "#2196f3",
-            }}
-          />
-          <Planet
-            sx={{
-              top: "50%",
-              left: "10%",
-              width: "45px",
-              height: "45px",
-              backgroundColor: "#ff9800",
-            }}
-          />
-          <Planet
-            sx={{
-              top: "80%",
-              left: "20%",
-              width: "60px",
-              height: "60px",
-              backgroundColor: "#ff5722",
-            }}
-          />
-          <Planet
-            sx={{
-              top: "20%",
-              left: "90%",
-              width: "50px",
-              height: "50px",
-              backgroundColor: "#e91e63",
-            }}
-          />
-
-          {/* <Sun sx={{ top: "5%", left: "5%" }} /> */}
-
-          <Button
-            style={{ color: "white", fontSize: "25px", marginLeft: "20px" }}
-            variant="text"
-          >
-            EN
-          </Button>
-        </header>
-      </div>
-
-      <main className="w-screen">
-        <Container maxWidth="sm">
-          {/* CONTEANT CONTAINER */}
-
-          <div className="div-content">
-            {/* CARD */}
-            <div
-              dir="rtl"
-              className=" rounded-[10px] p-[10px] shadow-[0px_11px_1px_rgba(0,0,0,0.05)]"
-              style={{ width: "100%", background: "#133E87", color: "white" }}
-            >
-              {/* CONTENT */}
-              <div>
-                {/* CITY & TIME */}
-                <div className="flex items-end justify-start " dir="rtl">
-                  <Typography
-                    style={{ fontWeight: 600, marginLeft: "20px" }}
-                    variant="h2"
-                  >
-                    الرياض
-                  </Typography>
-                  <Typography className="mr-[20px]" variant="h5">
-                    الاحد 13-2-2025
-                  </Typography>
-                </div>
-                <hr />
-
-                {/* CONTAINER OF DEGREE + CLOUD ICON */}
-
-                <div
-                  style={{ display: "flex", justifyContent: "space-around" }}
-                >
-                  {/* DEGREE & DESCRIPTION */}
-                  <div>
-                    {/* TEMP */}
-                    <div>
-                      <Typography className="mr-[20px]" variant="h1" dir="rtl">
-                        {temp}
-                      </Typography>
-
-                      {/* TODO: TEMP IMAGE */}
-                    </div>
-                    {/* === TEMP === */}
-                    <Typography className="mr-[20px]" variant="h4" dir="rtl">
-                      سحابة
-                    </Typography>
-                    {/* MIN & MAX */}
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Typography className="mr-[20px]" variant="h6" dir="rtl">
-                        الصغرى: 25
-                      </Typography>
-                      <Typography
-                        style={{ margin: "0px 5px" }}
-                        className="mr-[20px]"
-                        variant="h6"
-                        dir="rtl"
-                      >
-                        |
-                      </Typography>
-
-                      <Typography className="mr-[20px]" variant="h6" dir="rtl">
-                        الكبرى: 30
-                      </Typography>
-                    </div>
-                  </div>
-                  {/* === DEGREE & DESCRIPTION === */}
-
-                  <CloudIcon
-                    className="text-[200px] text-white"
-                    style={{ fontSize: "200px" }}
-                  />
-                </div>
-                {/* === CONTAINER OF DEGREE + CLOUD ICON === */}
-              </div>
-            </div>
-            {/* === CARD === */}
-
-            {/* TRANSLATION BUTTON */}
-            <div
+      <div className={darkMode ? "div-dark" : "div-light"}>
+        <div className="div-header" dir="rtl">
+          <header className="header">
+            <Typography
               style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "start",
+                fontWeight: 600,
+                marginLeft: "20px",
+                color: "white",
+                marginRight: "20px",
               }}
-            ></div>
-            {/* === TRANSLATION BUTTON ===*/}
-          </div>
-        </Container>
-      </main>
+              variant="h2"
+            >
+              الطقس
+            </Typography>
+            <FormControlLabel
+              onClick={DarkMode}
+              control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
+            />
+
+            {/* STAR */}
+            {darkMode && (
+              <>
+                <Star sx={{ top: "20%", left: "20%" }} />
+                <Star sx={{ top: "30%", left: "50%" }} />
+                <Star sx={{ top: "30%", left: "50%" }} />
+                <Star sx={{ top: "60%", left: "30%" }} />
+                <Star sx={{ top: "35%", left: "60%" }} />
+                <Star sx={{ top: "20%", left: "80%" }} />
+                <Star sx={{ top: "80%", left: "10%" }} />
+                <Star sx={{ top: "88%", left: "80%" }} />
+                <Star sx={{ top: "50%", left: "90%" }} />
+              </>
+            )}
+
+            {/* Moon */}
+            {darkMode && (
+              <Moon
+                sx={{
+                  top: "5%",
+                  left: "5%",
+                  width: "100px",
+                  height: "100px",
+                  backgroundColor: "#f0f0f0", // لون القمر
+                }}
+              />
+            )}
+
+            {/* Planet */}
+            {darkMode && (
+              <>
+                <Planet
+                  sx={{
+                    top: "20%",
+                    left: "30%",
+                    width: "15px",
+                    height: "15px",
+                    backgroundColor: "#ff5722",
+                  }}
+                />
+                <Planet
+                  sx={{
+                    top: "40%",
+                    left: "70%",
+                    width: "30px",
+                    height: "30px",
+                    backgroundColor: "#4caf50",
+                  }}
+                />
+                <Planet
+                  sx={{
+                    top: "60%",
+                    left: "80%",
+                    width: "25px",
+                    height: "25px",
+                    backgroundColor: "#2196f3",
+                  }}
+                />
+                <Planet
+                  sx={{
+                    top: "50%",
+                    left: "10%",
+                    width: "45px",
+                    height: "45px",
+                    backgroundColor: "#ff9800",
+                  }}
+                />
+                <Planet
+                  sx={{
+                    top: "80%",
+                    left: "20%",
+                    width: "60px",
+                    height: "60px",
+                    backgroundColor: "#ff5722",
+                  }}
+                />
+                <Planet
+                  sx={{
+                    top: "20%",
+                    left: "90%",
+                    width: "50px",
+                    height: "50px",
+                    backgroundColor: "#e91e63",
+                  }}
+                />
+              </>
+            )}
+
+            {!darkMode && <Sun sx={{ top: "5%", left: "90%" }} />}
+            <Button
+              style={{ color: "white", fontSize: "25px", marginLeft: "20px" }}
+              variant="text"
+            >
+              EN
+            </Button>
+          </header>
+        </div>
+
+        <main className="w-screen">
+          <Container maxWidth="sm">
+            {/* CONTEANT CONTAINER */}
+
+            <div className="div-content">
+              {/* CARD */}
+              <div
+                dir="rtl"
+                className=" rounded-[10px] p-[10px] shadow-[0px_11px_1px_rgba(0,0,0,0.05)]"
+                style={{ width: "100%", background: "#133E87", color: "white" }}
+              >
+                {/* CONTENT */}
+                <div>
+                  {/* CITY & TIME */}
+                  <div className="flex items-end justify-start " dir="rtl">
+                    <Typography
+                      style={{ fontWeight: 600, marginLeft: "20px" }}
+                      variant="h2"
+                    >
+                      الرياض
+                    </Typography>
+                    <Typography className="mr-[20px]" variant="h5">
+                      الاحد 13-2-2025
+                    </Typography>
+                  </div>
+                  <hr />
+
+                  {/* CONTAINER OF DEGREE + CLOUD ICON */}
+
+                  <div
+                    style={{ display: "flex", justifyContent: "space-around" }}
+                  >
+                    {/* DEGREE & DESCRIPTION */}
+                    <div>
+                      {/* TEMP */}
+                      <div>
+                        <Typography
+                          className="mr-[20px]"
+                          variant="h1"
+                          dir="rtl"
+                        >
+                          {temp}
+                        </Typography>
+
+                        {/* TODO: TEMP IMAGE */}
+                      </div>
+                      {/* === TEMP === */}
+                      <Typography className="mr-[20px]" variant="h4" dir="rtl">
+                        سحابة
+                      </Typography>
+                      {/* MIN & MAX */}
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Typography
+                          className="mr-[20px]"
+                          variant="h6"
+                          dir="rtl"
+                        >
+                          الصغرى: 25
+                        </Typography>
+                        <Typography
+                          style={{ margin: "0px 5px" }}
+                          className="mr-[20px]"
+                          variant="h6"
+                          dir="rtl"
+                        >
+                          |
+                        </Typography>
+
+                        <Typography
+                          className="mr-[20px]"
+                          variant="h6"
+                          dir="rtl"
+                        >
+                          الكبرى: 30
+                        </Typography>
+                      </div>
+                    </div>
+                    {/* === DEGREE & DESCRIPTION === */}
+
+                    <CloudIcon
+                      className="text-[200px] text-white"
+                      style={{ fontSize: "200px" }}
+                    />
+                  </div>
+                  {/* === CONTAINER OF DEGREE + CLOUD ICON === */}
+                </div>
+              </div>
+              {/* === CARD === */}
+
+              {/* TRANSLATION BUTTON */}
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "start",
+                }}
+              ></div>
+              {/* === TRANSLATION BUTTON ===*/}
+            </div>
+          </Container>
+        </main>
+      </div>
     </>
   );
 }
