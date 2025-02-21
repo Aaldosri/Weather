@@ -124,7 +124,11 @@ const Planet = styled("div")({
 let cancelAxios = null;
 
 function App() {
-  const [darkMode, setDark] = useState(false);
+  const [weatherDescription, setWeatherDescription] = useState(null);
+  const [maxTemp, setMaxTemp] = useState(null);
+  const [minTemp, setMinTemp] = useState(null);
+
+  const [darkMode, setDark] = useState(true);
 
   function DarkMode() {
     setDark((prevDark) => !prevDark);
@@ -143,9 +147,24 @@ function App() {
       )
       .then(function (response) {
         // handle success
-        const responseTemp = Math.round(response.data.main.temp - 272.15);
-        console.log(responseTemp);
+        const responseTemp = Math.round(response.data.main.temp - 273.15);
+        const responseDescription = response.data.weather[0].description;
+        const responseMaxTemp = Math.round(
+          response.data.main.temp_max - 273.15
+        );
+        const responseMinTemp = Math.round(
+          response.data.main.temp_min - 273.15
+        );
+
+        console.log(response);
+        console.log(weatherDescription);
+        console.log(responseMaxTemp);
+        console.log(responseMinTemp);
+
         setTemp(responseTemp);
+        setWeatherDescription(responseDescription);
+        setMaxTemp(responseMaxTemp);
+        setMinTemp(responseMinTemp);
       })
       .catch(function (error) {
         // handle error
@@ -184,8 +203,14 @@ function App() {
               الطقس
             </Typography>
             <FormControlLabel
+              style={{
+                background: "orange",
+                height: "0px",
+                width: "0px",
+                marginTop: "35px",
+              }}
               onClick={DarkMode}
-              control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
+              control={<MaterialUISwitch defaultChecked />}
             />
 
             {/* STAR */}
@@ -334,7 +359,7 @@ function App() {
                       </div>
                       {/* === TEMP === */}
                       <Typography className="mr-[20px]" variant="h4" dir="rtl">
-                        سحابة
+                        {weatherDescription}
                       </Typography>
                       {/* MIN & MAX */}
                       <div
@@ -349,7 +374,7 @@ function App() {
                           variant="h6"
                           dir="rtl"
                         >
-                          الصغرى: 25
+                          الصغرى: {minTemp}
                         </Typography>
                         <Typography
                           style={{ margin: "0px 5px" }}
@@ -365,7 +390,7 @@ function App() {
                           variant="h6"
                           dir="rtl"
                         >
-                          الكبرى: 30
+                          الكبرى: {maxTemp}
                         </Typography>
                       </div>
                     </div>
