@@ -7,6 +7,8 @@ import CloudIcon from "@mui/icons-material/Cloud";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import { Box } from "@mui/system";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
 
 // REACT
 import { useEffect, useState } from "react";
@@ -17,6 +19,13 @@ import AcUnitIcon from "@mui/icons-material/AcUnit";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import axios from "axios";
+
+const cities = [
+  { name: "الرياض", lat: 24.774265, lon: 46.738586 },
+  { name: "الدمام", lat: 26.4207, lon: 50.0888 },
+  { name: "مكة", lat: 21.3891, lon: 39.8579 },
+  { name: "القصيم", lat: 26.2154, lon: 43.5006 },
+];
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -124,6 +133,7 @@ const Planet = styled("div")({
 let cancelAxios = null;
 
 function App() {
+  const [selectedCity, setSelectedCity] = useState(cities[0]);
   const [weatherDescription, setWeatherDescription] = useState(null);
   const [maxTemp, setMaxTemp] = useState(null);
   const [minTemp, setMinTemp] = useState(null);
@@ -136,9 +146,11 @@ function App() {
   console.log("rendering the component (mounting) ");
   const [temp, setTemp] = useState(null);
   useEffect(() => {
+    if (!selectedCity) return;
+
     axios
       .get(
-        "https://api.openweathermap.org/data/2.5/weather?lat=24.774265&lon=46.738586&appid=5ab7bd94f9fa686ba5fbe1e922bf8212",
+        `https://api.openweathermap.org/data/2.5/weather?lat=${selectedCity.lat}&lon=${selectedCity.lon}&appid=5ab7bd94f9fa686ba5fbe1e922bf8212`,
         {
           cancelToken: new axios.CancelToken((c) => {
             cancelAxios = c;
@@ -157,6 +169,8 @@ function App() {
         );
 
         console.log(response);
+        console.log(response);
+        console.log(response);
         console.log(weatherDescription);
         console.log(responseMaxTemp);
         console.log(responseMinTemp);
@@ -172,10 +186,12 @@ function App() {
       });
 
     return () => {
-      console.log("Canciling");
-      cancelAxios();
+      if (cancelAxios) {
+        console.log("Canciling");
+        cancelAxios();
+      }
     };
-  }, []);
+  }, [selectedCity]);
 
   useEffect(() => {
     if (darkMode) {
@@ -316,6 +332,18 @@ function App() {
             {/* CONTEANT CONTAINER */}
 
             <div className="div-content">
+              <Autocomplete
+                getOptionLabel={(option) => option.name}
+                value={selectedCity}
+                onChange={(event, newValue) => setSelectedCity(newValue)}
+                disablePortal
+                options={cities}
+                sx={{ width: 300, margin: "20px" }}
+                renderInput={(params) => (
+                  <TextField {...params} label="المدينة" />
+                )}
+              />
+
               {/* CARD */}
               <div
                 dir="rtl"
@@ -330,7 +358,7 @@ function App() {
                       style={{ fontWeight: 600, marginLeft: "20px" }}
                       variant="h2"
                     >
-                      الرياض
+                      {selectedCity?.name}
                     </Typography>
                     <Typography className="mr-[20px]" variant="h5">
                       الاحد 13-2-2025
