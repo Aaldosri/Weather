@@ -54,3 +54,7 @@ body.light-mode {
   align-items: center;
   flex-direction: column;
 }
+
+.div-Autocomplete {
+  text-align: center;
+}
