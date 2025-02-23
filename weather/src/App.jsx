@@ -18,6 +18,8 @@ import DeviceThermostatIcon from "@mui/icons-material/DeviceThermostat";
 import AcUnitIcon from "@mui/icons-material/AcUnit";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
+
+// EXTERNAL LIBRARIES
 import axios from "axios";
 
 const cities = [
@@ -134,6 +136,8 @@ let cancelAxios = null;
 
 function App() {
   const [selectedCity, setSelectedCity] = useState(cities[0]);
+
+  const [icons, setIcons] = useState(null);
   const [weatherDescription, setWeatherDescription] = useState(null);
   const [maxTemp, setMaxTemp] = useState(null);
   const [minTemp, setMinTemp] = useState(null);
@@ -167,6 +171,7 @@ function App() {
         const responseMinTemp = Math.round(
           response.data.main.temp_min - 273.15
         );
+        const iconsTemp = response.data.weather[0].icon;
 
         console.log(response);
         console.log(response);
@@ -179,6 +184,7 @@ function App() {
         setWeatherDescription(responseDescription);
         setMaxTemp(responseMaxTemp);
         setMinTemp(responseMinTemp);
+        setIcons(iconsTemp);
       })
       .catch(function (error) {
         // handle error
@@ -424,9 +430,10 @@ function App() {
                     </div>
                     {/* === DEGREE & DESCRIPTION === */}
 
-                    <CloudIcon
-                      className="text-[200px] text-white"
-                      style={{ fontSize: "200px" }}
+                    <img
+                      src={`https://openweathermap.org/img/wn/${icons}.png`}
+                      alt="weather icon"
+                      className="w-[200px] h-[200px]"
                     />
                   </div>
                   {/* === CONTAINER OF DEGREE + CLOUD ICON === */}
