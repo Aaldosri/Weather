@@ -25,6 +25,11 @@ import AirIcon from "@mui/icons-material/Air";
 // EXTERNAL LIBRARIES
 import axios from "axios";
 import moment from "moment";
+import "moment/locale/ar";
+moment.locale("ar");
+
+console.log(moment.locale()); // يجب أن تطبع "ar" إذا كانت اللغة قد تم تعيينها بشكل صحيح
+console.log(moment().format("LLLL")); // يجب أن تطبع التاريخ بالعربية
 
 const cities = [
   { name: "الرياض", lat: 24.774265, lon: 46.738586 },
@@ -136,25 +141,16 @@ const Planet = styled("div")({
   `,
 });
 
-let cancelAxios = null;
-
 function App() {
-  const dataAndTime = moment().format("MMMM Do YYYY, h:mm:ss a");
+  const [dateAndTime, setDateAndTime] = useState("");
 
-  console.log("the time is " + dataAndTime);
   const [selectedCity, setSelectedCity] = useState(cities[0]);
-
-  const [icons, setIcons] = useState(null);
-  const [weatherDescription, setWeatherDescription] = useState(null);
-  const [maxTemp, setMaxTemp] = useState(null);
-  const [minTemp, setMinTemp] = useState(null);
 
   const [darkMode, setDark] = useState(true);
 
   function DarkMode() {
     setDark((prevDark) => !prevDark);
   }
-  console.log("rendering the component (mounting) ");
   const [temp, setTemp] = useState({
     number: null,
     description: null,
@@ -163,7 +159,13 @@ function App() {
     icon: null,
   });
   useEffect(() => {
+    const Interval = setInterval(() => {
+      setDateAndTime(moment().format("MMMM Do YYYY, h:mm:ss a"));
+    }, 1000);
+
     if (!selectedCity) return;
+
+    let cancelAxios = null;
 
     axios
       .get(
@@ -191,8 +193,6 @@ function App() {
           description: responseDescription,
           icon: `https://openweathermap.org/img/wn/${iconsTemp}@2x.png`,
         });
-        console.log(`'Weather Icon IS ' + ${cities}: ${responseDescription}`);
-        console.log(response);
       })
       .catch(function (error) {
         // handle error
@@ -200,6 +200,8 @@ function App() {
       });
 
     return () => {
+      clearInterval(Interval);
+
       if (cancelAxios) {
         console.log("Canciling");
         cancelAxios();
@@ -269,7 +271,6 @@ function App() {
                 style={{
                   background: "orange",
                   height: "0px",
-                  width: "0px",
                   marginTop: "35px",
                 }}
                 onClick={DarkMode}
@@ -387,12 +388,21 @@ function App() {
                     width: "95%",
                     background: "#133E87",
                     color: "white",
-                    height: "600px",
                   }}
                 >
                   {/* CONTENT */}
                   <div>
                     {/* CITY & TIME */}
+                    <Typography
+                      style={{
+                        fontWeight: 600,
+                        marginLeft: "20px",
+                        textAlign: "center",
+                      }}
+                      variant="h5"
+                    >
+                      {dateAndTime}
+                    </Typography>
                     <div
                       className="flex items-end "
                       dir="rtl"
@@ -424,16 +434,13 @@ function App() {
                         renderInput={(params) => (
                           <TextField
                             {...params}
-                            label="اختر المدينة"
                             variant="outlined"
                             className="input-custom"
                           />
                         )}
-                        renderInput={(params) => (
-                          <TextField {...params} className="input-custom" />
-                        )}
                       />
                     </div>
+
                     <hr />
 
                     {/* CONTAINER OF DEGREE + CLOUD ICON */}
@@ -455,33 +462,36 @@ function App() {
                           flexDirection: "column",
                         }}
                       >
-                        <img
-                          style={{
-                            width: "150px",
-                            height: "150px",
-                          }}
-                          src={temp?.icon}
-                          alt="weather icon"
-                        />
-
                         {/* TEMP */}
 
-                        <div>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                          }}
+                        >
                           {/* NAME */}
                           <Typography
-                            style={{ fontWeight: 600, marginLeft: "20px" }}
+                            style={{ fontWeight: 600, marginTop: "20px" }}
                             variant="h2"
                           >
                             {selectedCity?.name}
                           </Typography>
 
-                          <Typography
-                            className="mr-[20px]"
-                            variant="h1"
-                            dir="rtl"
-                          >
+                          <Typography variant="h1" dir="rtl">
                             {temp.number}°
                           </Typography>
+
+                          <img
+                            style={{
+                              width: "150px",
+                              height: "150px",
+                            }}
+                            src={temp?.icon}
+                            alt="weather icon"
+                          />
+
                           <Typography
                             className="mr-[20px]"
                             variant="h4"
