@@ -24,12 +24,13 @@ import AirIcon from "@mui/icons-material/Air";
 
 // EXTERNAL LIBRARIES
 import axios from "axios";
-import moment from "moment";
-import "moment/locale/ar";
-moment.locale("ar");
+import dayjs from "dayjs";
 
-console.log(moment.locale()); // يجب أن تطبع "ar" إذا كانت اللغة قد تم تعيينها بشكل صحيح
-console.log(moment().format("LLLL")); // يجب أن تطبع التاريخ بالعربية
+import "dayjs/locale/ar";
+dayjs.locale("ar");
+
+console.log(dayjs.locale()); // يجب أن تطبع "ar" إذا كانت اللغة قد تم تعيينها بشكل صحيح
+console.log(dayjs().format("LLLL")); // يجب أن تطبع التاريخ بالعربية
 
 const cities = [
   { name: "الرياض", lat: 24.774265, lon: 46.738586 },
@@ -160,7 +161,7 @@ function App() {
   });
   useEffect(() => {
     const Interval = setInterval(() => {
-      setDateAndTime(moment().format("MMMM Do YYYY, h:mm:ss a"));
+      setDateAndTime(dayjs().format(" h:mm:ss a | D MMMM YYYY"));
     }, 1000);
 
     if (!selectedCity) return;
