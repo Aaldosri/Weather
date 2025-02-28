@@ -27,16 +27,17 @@ import axios from "axios";
 import dayjs from "dayjs";
 
 import "dayjs/locale/ar";
+import { useTranslation } from "react-i18next";
 dayjs.locale("ar");
 
 console.log(dayjs.locale()); // يجب أن تطبع "ar" إذا كانت اللغة قد تم تعيينها بشكل صحيح
 console.log(dayjs().format("LLLL")); // يجب أن تطبع التاريخ بالعربية
 
 const cities = [
-  { name: "الرياض", lat: 24.774265, lon: 46.738586 },
-  { name: "الدمام", lat: 26.4207, lon: 50.0888 },
-  { name: "مكة", lat: 21.3891, lon: 39.8579 },
-  { name: "القصيم", lat: 26.2154, lon: 43.5006 },
+  { name: "الرياض", lat: 24.774265, lon: 46.738586, key: "riyadh" },
+  { name: "الدمام", lat: 26.4207, lon: 50.0888, key: "dammam" },
+  { name: "مكة المكرمة", lat: 21.3891, lon: 39.8579, key: "makkah" },
+  { name: "القصيم", lat: 26.2154, lon: 43.5006, key: "qassim" },
 ];
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
@@ -143,6 +144,8 @@ const Planet = styled("div")({
 });
 
 function App() {
+  const { t, i18n } = useTranslation();
+
   const [dateAndTime, setDateAndTime] = useState("");
 
   const [selectedCity, setSelectedCity] = useState(cities[0]);
@@ -159,6 +162,11 @@ function App() {
     wind: null,
     icon: null,
   });
+
+  useEffect(() => {
+    i18n.changeLanguage("en");
+  }, []);
+
   useEffect(() => {
     const Interval = setInterval(() => {
       setDateAndTime(dayjs().format(" h:mm:ss a | D MMMM YYYY"));
@@ -477,7 +485,9 @@ function App() {
                             style={{ fontWeight: 600, marginTop: "20px" }}
                             variant="h2"
                           >
-                            {selectedCity?.name}
+                            {t(`cities.${selectedCity?.key}`, {
+                              defaultValue: selectedCity?.name,
+                            })}
                           </Typography>
 
                           <Typography variant="h1" dir="rtl">

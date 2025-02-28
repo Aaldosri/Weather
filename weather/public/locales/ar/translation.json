@@ -1,0 +1,16 @@
+{
+  "cities": {
+    "en": {
+      "riyadh": "Riyadh",
+      "dammam": "Dammam",
+      "makkah": "Makkah",
+      "qassim": "Qassim"
+    },
+    "ar": {
+      "riyadh": "الرياض",
+      "dammam": "الدمام",
+      "makkah": "مكة المكرمة",
+      "qassim": "القصيم"
+    }
+  }
+}
