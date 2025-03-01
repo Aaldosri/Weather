@@ -34,10 +34,10 @@ console.log(dayjs.locale()); // يجب أن تطبع "ar" إذا كانت الل
 console.log(dayjs().format("LLLL")); // يجب أن تطبع التاريخ بالعربية
 
 const cities = [
-  { name: "الرياض", lat: 24.774265, lon: 46.738586, key: "riyadh" },
-  { name: "الدمام", lat: 26.4207, lon: 50.0888, key: "dammam" },
-  { name: "مكة المكرمة", lat: 21.3891, lon: 39.8579, key: "makkah" },
-  { name: "القصيم", lat: 26.2154, lon: 43.5006, key: "qassim" },
+  { name: "Riyadh", lat: 24.774265, lon: 46.738586 },
+  { name: "Dammam", lat: 26.4207, lon: 50.0888 },
+  { name: "Makkah", lat: 21.3891, lon: 39.8579 },
+  { name: "Qassim", lat: 26.2154, lon: 43.5006 },
 ];
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
@@ -146,6 +146,8 @@ const Planet = styled("div")({
 function App() {
   const { t, i18n } = useTranslation();
 
+  // ======= STATES ========
+
   const [dateAndTime, setDateAndTime] = useState("");
 
   const [selectedCity, setSelectedCity] = useState(cities[0]);
@@ -163,13 +165,32 @@ function App() {
     icon: null,
   });
 
+  const [local, setLocal] = useState("ar");
+
+  const direction = local == "ar" ? "rtl" : "ltr";
+  // ======= EVENT HANDLERS ========
+
+  function handleLanguageClick() {
+    if (local == "en") {
+      setLocal("ar");
+      i18n.changeLanguage("ar");
+      dayjs.locale("ar");
+    } else {
+      setLocal("en");
+      i18n.changeLanguage("en");
+      dayjs.locale("en");
+    }
+
+    setDateAndTime(dayjs().format(" h:mm:ss a | D MMMM YYYY"));
+  }
+
   useEffect(() => {
-    i18n.changeLanguage("en");
+    i18n.changeLanguage(local);
   }, []);
 
   useEffect(() => {
     const Interval = setInterval(() => {
-      setDateAndTime(dayjs().format(" h:mm:ss a | D MMMM YYYY"));
+      setDateAndTime(dayjs().format(" MMMM D YYYY | h:mm:ss a"));
     }, 1000);
 
     if (!selectedCity) return;
@@ -263,7 +284,7 @@ function App() {
     <>
       <ThemeProvider theme={theme}>
         <div className={darkMode ? "div-dark" : "div-light"}>
-          <div className="div-header" dir="rtl">
+          <div className="div-header" dir={direction}>
             <header className="header">
               <Typography
                 style={{
@@ -274,7 +295,7 @@ function App() {
                 }}
                 variant="h2"
               >
-                الطقس
+                {t("Weather")}
               </Typography>
               <FormControlLabel
                 style={{
@@ -376,10 +397,11 @@ function App() {
 
               {!darkMode && <Sun sx={{ top: "5%", left: "90%" }} />}
               <Button
+                onClick={handleLanguageClick}
                 style={{ color: "white", fontSize: "25px", marginLeft: "20px" }}
                 variant="text"
               >
-                EN
+                {local == "en" ? "AR" : "EN"}
               </Button>
             </header>
           </div>
@@ -485,9 +507,8 @@ function App() {
                             style={{ fontWeight: 600, marginTop: "20px" }}
                             variant="h2"
                           >
-                            {t(`cities.${selectedCity?.key}`, {
-                              defaultValue: selectedCity?.name,
-                            })}
+                            {/* {selectedCity?.name} */}
+                            {t(selectedCity.name)}
                           </Typography>
 
                           <Typography variant="h1" dir="rtl">
@@ -509,7 +530,7 @@ function App() {
                             dir="rtl"
                             style={{ margin: "20px" }}
                           >
-                            {temp.description}
+                            {t(temp.description)}
                           </Typography>
 
                           {/* TODO: TEMP IMAGE */}
@@ -529,7 +550,7 @@ function App() {
                             variant="h5"
                             dir="rtl"
                           >
-                            الرطوبة <WaterDropIcon />
+                            {t("humidity")} <WaterDropIcon />
                             <span style={{ display: "block" }}>
                               {temp.humidity}%
                             </span>
@@ -539,7 +560,7 @@ function App() {
                             variant="h5"
                             dir="rtl"
                           >
-                            سرعة الرياح <AirIcon />
+                            {t("wind speed")} <AirIcon />
                             <span style={{ display: "block" }}>
                               {temp.wind} km / h
                             </span>

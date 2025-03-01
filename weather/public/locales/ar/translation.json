@@ -1,16 +1,18 @@
 {
-  "cities": {
-    "en": {
-      "riyadh": "Riyadh",
-      "dammam": "Dammam",
-      "makkah": "Makkah",
-      "qassim": "Qassim"
-    },
-    "ar": {
-      "riyadh": "الرياض",
-      "dammam": "الدمام",
-      "makkah": "مكة المكرمة",
-      "qassim": "القصيم"
-    }
-  }
+  "Riyadh": "الرياض",
+  "Dammam": "الدمام",
+  "Makkah": "مكة المكرمة",
+  "Qasmin": "القصيم",
+  "Weather": "الطقس",
+  "humidity": "الرطوبة",
+  "wind speed": "سرعة الرياح",
+  "clear sky": "سماء صافية",
+  "few clouds": "سحب قليلة",
+  "scattered clouds": "سحب متفرقة",
+  "broken clouds": "سحب متقطعة",
+  "shower rain": "زخات مطر",
+  "rain": "امطار",
+  "thunderstorm": "عواصف رعدية",
+  "snow": "ثلوج",
+  "mist": "ضباب"
 }
