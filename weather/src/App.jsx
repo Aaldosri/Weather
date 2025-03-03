@@ -143,6 +143,33 @@ const Planet = styled("div")({
   `,
 });
 
+const Cloud = styled("div")({
+  position: "absolute",
+  width: "100px", // عرض الغيمة
+  height: "50px", // ارتفاع الغيمة
+  backgroundColor: "#fff", // لون الغيمة
+  borderRadius: "50px", // جعل الحواف مستديرة
+  boxShadow: "0 0 10px rgba(255, 255, 255, 0.8)", // إضافة ظل ناعم
+  "&::before, &::after": {
+    content: '""',
+    position: "absolute",
+    backgroundColor: "#fff",
+    borderRadius: "50%",
+  },
+  "&::before": {
+    width: "50px",
+    height: "50px",
+    top: "-20px",
+    left: "10px",
+  },
+  "&::after": {
+    width: "60px",
+    height: "60px",
+    top: "-30px",
+    right: "10px",
+  },
+});
+
 function App() {
   const { t, i18n } = useTranslation();
 
@@ -283,7 +310,10 @@ function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <div className={darkMode ? "div-dark" : "div-light"}>
+        <div
+          className={darkMode ? "div-dark" : "div-light"}
+          style={{ fontFamily: "system-ui" }}
+        >
           <div className="div-header" dir={direction}>
             <header className="header">
               <Typography
@@ -396,6 +426,9 @@ function App() {
               )}
 
               {!darkMode && <Sun sx={{ top: "5%", left: "90%" }} />}
+              {!darkMode && <Cloud style={{ top: "30%", left: "20%" }} />}
+              {!darkMode && <Cloud style={{ top: "17%", left: "50%" }} />}
+              {!darkMode && <Cloud style={{ top: "30%", left: "90%" }} />}
               <Button
                 onClick={handleLanguageClick}
                 style={{ color: "white", fontSize: "25px", marginLeft: "20px" }}
@@ -406,7 +439,7 @@ function App() {
             </header>
           </div>
 
-          <main className="w-screen">
+          <main className="element" style={{ fontFamily: "NotoSans" }}>
             <Container maxWidth="sm">
               {/* CONTEANT CONTAINER */}
 

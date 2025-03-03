@@ -14,5 +14,7 @@
   "rain": "امطار",
   "thunderstorm": "عواصف رعدية",
   "snow": "ثلوج",
-  "mist": "ضباب"
+  "mist": "ضباب",
+  "light rain": "مطر خفيف",
+  "overcast clouds": "غيوم ملبدة بالغيوم"
 }

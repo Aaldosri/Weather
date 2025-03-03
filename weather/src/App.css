@@ -1,9 +1,20 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "NotoSans-1";
+  src: url(NotoSans-Bold.ttf);
+}
+@font-face {
+  font-family: "NotoSans-2";
+  src: url(NotoSans-Medium.ttf);
+}
+
 body {
   background-color: #001a6e;
   overflow: hidden;
+  font-family: "NotoSans" !important;
 }
+
 body.dark-mode {
   background-color: #001a6e;
   color: white; /* لون النص في الوضع الداكن */
@@ -17,6 +28,12 @@ body.light-mode {
   overflow: hidden;
 }
 
+@font-face {
+  font-family: NotoSans;
+  src: url("/public/fonts/NotoSans-Regular.ttf");
+  weight: 500;
+}
+
 /* HEADER */
 
 /* .div-dark {
@@ -27,6 +44,10 @@ body.light-mode {
   background-color: #b1c3ff;
   height: 100%;
 } */
+
+.element {
+  width: 100vw;
+}
 
 .div-header {
   background-color: #074799;
