@@ -1,18 +1,14 @@
-@import "tailwindcss";
-
-@font-face {
-  font-family: "NotoSans-1";
-  src: url(NotoSans-Bold.ttf);
-}
-@font-face {
-  font-family: "NotoSans-2";
-  src: url(NotoSans-Medium.ttf);
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 body {
   background-color: #001a6e;
   overflow: hidden;
-  font-family: "NotoSans" !important;
+}
+
+* {
+  font-family: Rubik !important;
 }
 
 body.dark-mode {
@@ -29,9 +25,8 @@ body.light-mode {
 }
 
 @font-face {
-  font-family: NotoSans;
-  src: url("/public/fonts/NotoSans-Regular.ttf");
-  weight: 500;
+  font-family: Rubik;
+  src: url(fonts/Rubik-Regular.ttf);
 }
 
 /* HEADER */

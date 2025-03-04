@@ -473,7 +473,9 @@ function App() {
                       style={{ justifyContent: " center" }}
                     >
                       <Autocomplete
-                        getOptionLabel={(option) => option.name}
+                        getOptionLabel={(option) =>
+                          i18n.language === "en" ? option.name : t(option.name)
+                        } // استخدام الترجمة بناءً على اللغة
                         value={selectedCity}
                         onChange={(event, newValue) =>
                           setSelectedCity(newValue)
