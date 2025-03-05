@@ -310,10 +310,7 @@ function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <div
-          className={darkMode ? "div-dark" : "div-light"}
-          style={{ fontFamily: "system-ui" }}
-        >
+        <div className={darkMode ? "div-dark" : "div-light"}>
           <div className="div-header" dir={direction}>
             <header className="header">
               <Typography
