@@ -112,6 +112,13 @@ const Sun = styled("div")({
   backgroundColor: "#ffeb3b",
   borderRadius: "50%",
   boxShadow: "0 0 20px #ffeb3b",
+
+  "@media (max-width: 640px)": {
+    display: "none",
+  },
+  "@media (min-width: 641px) and (max-width: 1024px)": {
+    display: "none",
+  },
 });
 
 // القمر مع تجويف وآثار
@@ -119,14 +126,30 @@ const Moon = styled("div")({
   position: "absolute",
   borderRadius: "50%",
   boxShadow: `
-    0 0 20px rgba(240, 240, 240, 0.5),
-    inset 5px 5px 15px rgba(255, 255, 255, 0.7),
-    inset -5px -5px 15px rgba(255, 255, 255, 0.2)
+    0 0 30px rgba(255, 255, 255, 0.6),  // تأثير الإضاءة المحيطية
+    inset 5px 5px 20px rgba(255, 255, 255, 0.8),  // إضافة ضوء داخل القمر
+    inset -5px -5px 25px rgba(255, 255, 255, 0.3)  // تأثير الضوء الداخل
   `,
   background: `
-    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.7)),
-    radial-gradient(circle at 60% 60%, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.8))
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.4), rgba(0, 0, 0, 0.6)),
+    radial-gradient(circle at 60% 60%, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.7))
   `,
+  width: "100px", // عرض القمر
+  height: "100px", // ارتفاع القمر
+  top: "5%", // موقع القمر على الشاشة
+  left: "5%", // موقع القمر على الشاشة
+  transition: "all 0.3s ease", // إضافة تأثير تفاعل عند التحريك
+
+  "@media (max-width: 640px)": {
+    display: "none",
+  },
+  "@media (min-width: 641px) and (max-width: 1024px)": {
+    display: "none",
+  },
+  "@media (min-width: 1025px)": {
+    width: "100px",
+    height: "100px",
+  },
 });
 
 const Planet = styled("div")({
@@ -141,6 +164,13 @@ const Planet = styled("div")({
     radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.7)),
     radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.8))
   `,
+
+  "@media (max-width: 640px)": {
+    display: "none",
+  },
+  "@media (min-width: 641px) and (max-width: 1024px)": {
+    display: "none",
+  },
 });
 
 const Cloud = styled("div")({
@@ -167,6 +197,13 @@ const Cloud = styled("div")({
     height: "60px",
     top: "-30px",
     right: "10px",
+  },
+
+  "@media (max-width: 640px)": {
+    display: "none",
+  },
+  "@media (min-width: 641px) and (max-width: 1024px)": {
+    display: "none",
   },
 });
 
@@ -311,29 +348,57 @@ function App() {
     <>
       <ThemeProvider theme={theme}>
         <div className={darkMode ? "div-dark" : "div-light"}>
+<<<<<<< HEAD
           <div className="div-header" dir={direction}>
             <header className="header">
+=======
+          <div
+            className="div-header w-full max-w-[70%] bg-[#074799] rounded-[50px] text-center mx-auto overflow-hidden mt-5"
+            dir={direction}
+          >
+            <header className="header flex justify-between items-center px-4 py-[15px] flex-wrap">
+              {/* العنوان */}
+>>>>>>> Responsive
               <Typography
-                style={{
-                  fontWeight: 600,
-                  marginLeft: "20px",
+                sx={{
+                  fontSize: {
+                    xs: "1.5rem", // الشاشات الصغيرة جدًا (الموبايل)
+                    sm: "1.5rem", // التابلت
+                    md: "2rem", // اللابتوب
+                    lg: "3rem", // الشاشات الكبيرة
+                  },
                   color: "white",
-                  marginRight: "20px",
                 }}
-                variant="h2"
+                variant="h3"
+                className="text-white  text-lg sm:text-2xl md:text-4xl lg:text-5xl"
               >
                 {t("Weather")}
               </Typography>
-              <FormControlLabel
-                style={{
-                  background: "orange",
-                  height: "0px",
-                  marginTop: "35px",
-                }}
-                onClick={DarkMode}
-                control={<MaterialUISwitch defaultChecked />}
-              />
 
+              {/* عناصر التحكم */}
+              <div className="flex items-center space-x-4 sm:space-x-6">
+                <FormControlLabel
+                  className="bg-orange-500 rounded-md cursor-pointer"
+                  onClick={DarkMode}
+                  control={<MaterialUISwitch defaultChecked />}
+                />
+
+                {/* زر تغيير اللغة */}
+                <Button
+                  style={{ color: "white" }}
+                  onClick={handleLanguageClick}
+                  className="!text-white text-lg"
+                  variant="text"
+                >
+                  {local == "en" ? "AR" : "EN"}
+                </Button>
+              </div>
+            </header>
+          </div>
+
+          <main className="element" style={{ fontFamily: "NotoSans" }}>
+            <Container maxWidth="sm">
+              {/* CONTEANT CONTAINER */}
               {/* STAR */}
               {darkMode && (
                 <>
@@ -424,21 +489,8 @@ function App() {
 
               {!darkMode && <Sun sx={{ top: "5%", left: "90%" }} />}
               {!darkMode && <Cloud style={{ top: "30%", left: "20%" }} />}
-              {!darkMode && <Cloud style={{ top: "17%", left: "50%" }} />}
+              {!darkMode && <Cloud style={{ top: "15%", left: "50%" }} />}
               {!darkMode && <Cloud style={{ top: "30%", left: "90%" }} />}
-              <Button
-                onClick={handleLanguageClick}
-                style={{ color: "white", fontSize: "25px", marginLeft: "20px" }}
-                variant="text"
-              >
-                {local == "en" ? "AR" : "EN"}
-              </Button>
-            </header>
-          </div>
-
-          <main className="element" style={{ fontFamily: "NotoSans" }}>
-            <Container maxWidth="sm">
-              {/* CONTEANT CONTAINER */}
 
               <div className="div-content">
                 {/* CARD */}
