@@ -74,3 +74,8 @@ body.light-mode {
 .div-Autocomplete {
   text-align: center;
 }
+
+::selection {
+  background-color: #2100de; /* لون الخلفية عند تحديد النص */
+  color: white; /* لون النص عند تحديده */
+}

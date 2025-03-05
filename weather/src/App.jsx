@@ -348,17 +348,12 @@ function App() {
     <>
       <ThemeProvider theme={theme}>
         <div className={darkMode ? "div-dark" : "div-light"}>
-<<<<<<< HEAD
-          <div className="div-header" dir={direction}>
-            <header className="header">
-=======
           <div
             className="div-header w-full max-w-[70%] bg-[#074799] rounded-[50px] text-center mx-auto overflow-hidden mt-5"
             dir={direction}
           >
             <header className="header flex justify-between items-center px-4 py-[15px] flex-wrap">
               {/* العنوان */}
->>>>>>> Responsive
               <Typography
                 sx={{
                   fontSize: {
@@ -385,7 +380,7 @@ function App() {
 
                 {/* زر تغيير اللغة */}
                 <Button
-                  style={{ color: "white" }}
+                  style={{ color: "white", fontSize: "25px" }}
                   onClick={handleLanguageClick}
                   className="!text-white text-lg"
                   variant="text"
