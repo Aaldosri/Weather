@@ -1,12 +1,8 @@
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import CloudIcon from "@mui/icons-material/Cloud";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
-import { Box } from "@mui/system";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { createTheme, ThemeProvider } from "@mui/material";
@@ -15,8 +11,6 @@ import { createTheme, ThemeProvider } from "@mui/material";
 import { useEffect, useState } from "react";
 
 // ICONS
-import DeviceThermostatIcon from "@mui/icons-material/DeviceThermostat";
-import AcUnitIcon from "@mui/icons-material/AcUnit";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import WaterDropIcon from "@mui/icons-material/WaterDrop";
