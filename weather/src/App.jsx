@@ -24,9 +24,6 @@ import "dayjs/locale/ar";
 import { useTranslation } from "react-i18next";
 dayjs.locale("ar");
 
-console.log(dayjs.locale()); // يجب أن تطبع "ar" إذا كانت اللغة قد تم تعيينها بشكل صحيح
-console.log(dayjs().format("LLLL")); // يجب أن تطبع التاريخ بالعربية
-
 const cities = [
   { name: "Riyadh", lat: 24.774265, lon: 46.738586 },
   { name: "Dammam", lat: 26.4207, lon: 50.0888 },
@@ -115,7 +112,6 @@ const Sun = styled("div")({
   },
 });
 
-// القمر مع تجويف وآثار
 const Moon = styled("div")({
   position: "absolute",
   borderRadius: "50%",
@@ -128,11 +124,11 @@ const Moon = styled("div")({
     radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.4), rgba(0, 0, 0, 0.6)),
     radial-gradient(circle at 60% 60%, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.7))
   `,
-  width: "100px", // عرض القمر
-  height: "100px", // ارتفاع القمر
-  top: "5%", // موقع القمر على الشاشة
-  left: "5%", // موقع القمر على الشاشة
-  transition: "all 0.3s ease", // إضافة تأثير تفاعل عند التحريك
+  width: "100px",
+  height: "100px",
+  top: "5%",
+  left: "5%",
+  transition: "all 0.3s ease",
 
   "@media (max-width: 640px)": {
     display: "none",
@@ -169,11 +165,11 @@ const Planet = styled("div")({
 
 const Cloud = styled("div")({
   position: "absolute",
-  width: "100px", // عرض الغيمة
-  height: "50px", // ارتفاع الغيمة
-  backgroundColor: "#fff", // لون الغيمة
-  borderRadius: "50px", // جعل الحواف مستديرة
-  boxShadow: "0 0 10px rgba(255, 255, 255, 0.8)", // إضافة ظل ناعم
+  width: "100px",
+  height: "50px",
+  backgroundColor: "#fff",
+  borderRadius: "50px",
+  boxShadow: "0 0 10px rgba(255, 255, 255, 0.8)",
   "&::before, &::after": {
     content: '""',
     position: "absolute",
@@ -210,7 +206,20 @@ function App() {
 
   const [selectedCity, setSelectedCity] = useState(cities[0]);
 
-  const [darkMode, setDark] = useState(true);
+  const [darkMode, setDark] = useState(() => {
+    const saved = localStorage.getItem("theme");
+    return saved === "dark" ? true : false;
+  });
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [darkMode]);
 
   function DarkMode() {
     setDark((prevDark) => !prevDark);
@@ -223,9 +232,16 @@ function App() {
     icon: null,
   });
 
-  const [local, setLocal] = useState("ar");
+  const [local, setLocal] = useState(() => {
+    return localStorage.getItem("lang") || "ar";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("lang", local);
+  }, [local]);
 
   const direction = local == "ar" ? "rtl" : "ltr";
+
   // ======= EVENT HANDLERS ========
 
   function handleLanguageClick() {
@@ -272,8 +288,6 @@ function App() {
         const responseWind = response.data.wind.speed;
         const iconsTemp = response.data.weather[0].icon;
 
-        console.log(response);
-
         setTemp({
           number: responseTemp,
           humidity: responseHumidity,
@@ -281,17 +295,12 @@ function App() {
           description: responseDescription,
           icon: `https://openweathermap.org/img/wn/${iconsTemp}@2x.png`,
         });
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
       });
 
     return () => {
       clearInterval(Interval);
 
       if (cancelAxios) {
-        console.log("Canciling");
         cancelAxios();
       }
     };
@@ -299,11 +308,11 @@ function App() {
 
   useEffect(() => {
     if (darkMode) {
-      document.body.classList.add("dark-mode"); // إضافة كلاس للوضع الداكن
-      document.body.classList.remove("light-mode"); // إزالة كلاس الوضع الفاتح
+      document.body.classList.add("dark-mode");
+      document.body.classList.remove("light-mode");
     } else {
-      document.body.classList.add("light-mode"); // إضافة كلاس للوضع الفاتح
-      document.body.classList.remove("dark-mode"); // إزالة كلاس الوضع الداكن
+      document.body.classList.add("light-mode");
+      document.body.classList.remove("dark-mode");
     }
   }, [darkMode]);
 
@@ -351,10 +360,10 @@ function App() {
               <Typography
                 sx={{
                   fontSize: {
-                    xs: "1.5rem", // الشاشات الصغيرة جدًا (الموبايل)
-                    sm: "1.5rem", // التابلت
-                    md: "2rem", // اللابتوب
-                    lg: "3rem", // الشاشات الكبيرة
+                    xs: "1.5rem",
+                    sm: "1.5rem",
+                    md: "2rem",
+                    lg: "3rem",
                   },
                   color: "white",
                 }}
@@ -369,7 +378,7 @@ function App() {
                 <FormControlLabel
                   className="bg-orange-500 rounded-md cursor-pointer"
                   onClick={DarkMode}
-                  control={<MaterialUISwitch defaultChecked />}
+                  control={<MaterialUISwitch checked={darkMode} />}
                 />
 
                 {/* زر تغيير اللغة */}
@@ -411,7 +420,7 @@ function App() {
                     left: "5%",
                     width: "100px",
                     height: "100px",
-                    backgroundColor: "#f0f0f0", // لون القمر
+                    backgroundColor: "#f0f0f0",
                   }}
                 />
               )}
@@ -477,9 +486,11 @@ function App() {
               )}
 
               {!darkMode && <Sun sx={{ top: "5%", left: "90%" }} />}
-              {!darkMode && <Cloud style={{ top: "30%", left: "20%" }} />}
-              {!darkMode && <Cloud style={{ top: "15%", left: "50%" }} />}
+              {!darkMode && <Cloud style={{ top: "20%", left: "25%" }} />}
+              {/* {!darkMode && <Cloud style={{ top: "15%", left: "50%" }} />} */}
               {!darkMode && <Cloud style={{ top: "30%", left: "90%" }} />}
+              {!darkMode && <Cloud style={{ top: "50%", left: "10%" }} />}
+              {!darkMode && <Cloud style={{ top: "40%", left: "70%" }} />}
 
               <div className="div-content">
                 {/* CARD */}
@@ -513,7 +524,7 @@ function App() {
                       <Autocomplete
                         getOptionLabel={(option) =>
                           i18n.language === "en" ? option.name : t(option.name)
-                        } // استخدام الترجمة بناءً على اللغة
+                        }
                         value={selectedCity}
                         onChange={(event, newValue) =>
                           setSelectedCity(newValue)
@@ -580,7 +591,6 @@ function App() {
                             style={{ fontWeight: 600, marginTop: "20px" }}
                             variant="h2"
                           >
-                            {/* {selectedCity?.name} */}
                             {t(selectedCity.name)}
                           </Typography>
 

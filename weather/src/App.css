@@ -13,14 +13,13 @@ body {
 
 body.dark-mode {
   background-color: #001a6e;
-  color: white; /* لون النص في الوضع الداكن */
+  color: white;
   overflow: hidden;
 }
 
 body.light-mode {
-  /* background-color: #679fa6; */
   background-color: #9ad2d9;
-  color: black; /* لون النص في الوضع الفاتح */
+  color: black;
   overflow: hidden;
 }
 
@@ -28,17 +27,6 @@ body.light-mode {
   font-family: Rubik;
   src: url(fonts/Rubik-Regular.ttf);
 }
-
-/* HEADER */
-
-/* .div-dark {
-  background-color: #001a6e;
-}
-
-.div-light {
-  background-color: #b1c3ff;
-  height: 100%;
-} */
 
 .element {
   width: 100vw;
@@ -76,6 +64,6 @@ body.light-mode {
 }
 
 ::selection {
-  background-color: #2100de; /* لون الخلفية عند تحديد النص */
-  color: white; /* لون النص عند تحديده */
+  background-color: #2100de;
+  color: white;
 }
