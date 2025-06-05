@@ -350,9 +350,9 @@ function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <div className={darkMode ? "div-dark" : "div-light"}>
+        <div className={darkMode ? "div-dark" : "div-light "}>
           <div
-            className="div-header w-full max-w-[70%] bg-[#074799] rounded-[50px] text-center mx-auto overflow-hidden mt-5"
+            className="div-header  w-full max-w-[70%] bg-[#074799] rounded-[50px] text-center mx-auto overflow-hidden mt-5"
             dir={direction}
           >
             <header className="header flex justify-between items-center px-4 py-[15px] flex-wrap">
@@ -501,6 +501,10 @@ function App() {
                     width: "95%",
                     background: "#133E87",
                     color: "white",
+                    transform:
+                      window.innerWidth <= 375 ? "scale(0.8)" : "scale(1)",
+                    transformOrigin: "top center",
+                    marginTop: window.innerWidth <= 375 ? "15vh" : "initial",
                   }}
                 >
                   {/* CONTENT */}

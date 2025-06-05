@@ -41,7 +41,6 @@ body.light-mode {
   border-radius: 50px;
   width: 70%;
   text-align: center;
-  margin: auto;
   overflow: hidden;
   margin-top: 20px;
 }
@@ -72,11 +71,8 @@ body.light-mode {
   color: white;
 }
 
-/* Responsive */
-@media (max-width: 767px) {
+@media (max-width: 770px) {
   body {
-    display: block; /* تخلي العرض عادي */
-    min-height: auto; /* يسمح بالطول الطبيعي */
-    overflow-y: auto; /* يسمح بالتمرير عمودي */
+    overflow: auto !important;
   }
 }
