@@ -11,11 +11,12 @@ Built with a focus on simplicity and clarity, with support for both light ☀️
 - React  for dynamic UI and state management
 
 ✨ Features
-🌡️ Real-time weather data
 
-☀️🌙 Light and Dark Mode
+- 🌡️ Real-time weather data
 
-📱 Fully responsive design
+- ☀️🌙 Light and Dark Mode
 
-🇸🇦 Focused on Saudi cities
+- 📱 Fully responsive design
+
+- 🇸🇦 Focused on Saudi cities
 
