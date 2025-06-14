@@ -1,0 +1,20 @@
+{
+  "Riyadh": "Riyadh",
+  "Dammam": "Dammam",
+  "Makkah": "Makkah",
+  "Qassim": "Qassim",
+  "Weather": "Weather",
+  "humidity": "humidity",
+  "wind speed": "wind speed",
+  "clear sky": "clear sky",
+  "few clouds": "few clouds",
+  "scattered clouds": "scattered clouds",
+  "broken clouds": "broken clouds",
+  "shower rain": "shower rain",
+  "rain": "rain",
+  "thunderstorm": "thunderstorm",
+  "snow": "snow",
+  "mist": "mist",
+  "light rain": "light rain",
+  "overcast clouds": "overcast clouds"
+}
