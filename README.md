@@ -10,7 +10,7 @@ Built with a focus on simplicity and clarity, with support for both light ☀️
 
 - React  for dynamic UI and state management
 
-✨ Features
+✨ Features :
 
 - 🌡️ Real-time weather data
 
