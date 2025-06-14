@@ -2,8 +2,9 @@
 WEATHER is a modern and responsive website that shows current weather for Riyadh, Makkah, Dammam, and Al Qassim using a public weather API.
 Built with a focus on simplicity and clarity, with support for both light ☀️ and dark 🌙 modes.
 
-Check out the live version of the project here:  
-👉 [Live Demo](https://wondrous-kangaroo-670a1d.netlify.app/)
+## 🚀 **LIVE DEMO**
+
+👉 [Live Demo](https://your-demo-link.com)
 
 🛠️ Built With :
 
