@@ -6,7 +6,7 @@ Built with a focus on simplicity and clarity, with support for both light ☀️
 
 [Click here to view the live site](https://wondrous-kangaroo-670a1d.netlify.app/)
 
-🛠️ Built With :
+###🛠️ Built With :
 
 - HTML  for semantic structure
 
@@ -14,7 +14,7 @@ Built with a focus on simplicity and clarity, with support for both light ☀️
 
 - React  for dynamic UI and state management
 
-✨ Features :
+###✨ Features :
 
 - 🌡️ Real-time weather data
 
