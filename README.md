@@ -6,14 +6,6 @@ Built with a focus on simplicity and clarity, with support for both light ☀️
 
 [Click here to view the live site](https://wondrous-kangaroo-670a1d.netlify.app/)
 
-### 🛠️ Built With :
-
-- HTML  for semantic structure
- 
-- CSS  for clean and responsive styling
-
-- React  for dynamic UI and state management
-
 ### ✨ Features :
 
 - 🌡️ Real-time weather data
@@ -24,3 +16,11 @@ Built with a focus on simplicity and clarity, with support for both light ☀️
 
 - 🇸🇦 Focused on Saudi cities
 
+
+### 🛠️ Technologies Used :
+
+- HTML  for semantic structure
+ 
+- CSS  for clean and responsive styling
+
+- React  for dynamic UI and state management
